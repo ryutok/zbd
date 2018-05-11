@@ -17,6 +17,7 @@ Usage: zbd [Directory_name | Number]
 
 Startup:
     -h, --help      print this help
+
 EOF
 }
 
