@@ -6,7 +6,7 @@ This is reimplementation of [Tarrasch/zsh-bd](https://github.com/Tarrasch/zsh-bd
 
 ## What's different from Tarrasch/zsh-bd
 ### Ignore current directory
-Current directory is not included in parent directory list.
+Current directory is not included in the parent directory list.
 For example, when you are in `~/aaa/bbb/ccc/aaa`, command `zbd aaa` means `cd ~/aaa`.
 
 ### Performance without argument
@@ -21,20 +21,11 @@ Install [zplug](https://github.com/zplug/zplug) and add following line to your `
     zplug 'ryutok/zbd'
 
 ### By manual
-Download `zbd.zsh` by running one of the following commands in your terminal.
-Please change `<INSTALL_DIR>` to the directory which you want to install zbd.
+1. Download source code from [releases](https://github.com/ryutok/zbd/archive/v1.0.tar.gz) and uncompress the files.
+2. Move the uncompressed directory `zbd-X.X` to the directory which you want to install zbd.
+3. Add following line to your `.zshrc` file. Please change `<INSTALL_DIR>` to your install directory.
 
-via `curl`
-
-    curl https://raw.githubusercontent.com/ryutok/zbd/master/zbd.zsh > <INSTALL_DIR>/zbd.zsh
-
-via `wget`
-
-    wget https://raw.githubusercontent.com/ryutok/zbd/master/zbd.zsh <INSTALL_DIR>/zbd.zsh
-
-Then, add following line to your `.zshrc` file.
-
-    . <INSTALL_DIR>/zbd.zsh
+    . <INSTALL_DIR>/zbd-*/zbd.zsh
 
 
 ## Usage
