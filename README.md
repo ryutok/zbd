@@ -22,7 +22,7 @@ zplug 'ryutok/zbd'
 ```
 
 ### By manual
-1. Download source code from [releases](https://github.com/ryutok/zbd/archive/v1.0.tar.gz) and uncompress the files.
+1. Download source code from [releases](https://github.com/ryutok/zbd/releases) and uncompress the files.
 2. Move the uncompressed directory `zbd-X.X` to the directory which you want to install zbd.
 3. Add following line to your `.zshrc` file. Please change `<INSTALL_DIR>` to your install directory.
 ```
