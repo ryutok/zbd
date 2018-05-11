@@ -17,16 +17,17 @@ When you want to display usage, please execute `zbd -h` or `zbd --help`.
 ## Installation
 ### By zplug
 Install [zplug](https://github.com/zplug/zplug) and add following line to your `.zshrc` file.
-
-    zplug 'ryutok/zbd'
+```
+zplug 'ryutok/zbd'
+```
 
 ### By manual
 1. Download source code from [releases](https://github.com/ryutok/zbd/archive/v1.0.tar.gz) and uncompress the files.
 2. Move the uncompressed directory `zbd-X.X` to the directory which you want to install zbd.
 3. Add following line to your `.zshrc` file. Please change `<INSTALL_DIR>` to your install directory.
-
-    . <INSTALL_DIR>/zbd-*/zbd.zsh
-
+```
+. <INSTALL_DIR>/zbd-*/zbd.zsh
+```
 
 ## Usage
 
