@@ -39,8 +39,8 @@ function __zbd:cd {
 
 function __zbd:count {
     local num
-    __zbd:get_parents
-    if [[ ${_ZBD_PARENTS[(I)$1]} -eq 0 ]]; then
+    __zbd:get_dirs
+    if [[ ${reply[(I)$1]} -eq 0 ]]; then
         expr "$1" + 1 >/dev/null 2>&1
         if [ $? -lt 2 ]
         then
@@ -49,25 +49,22 @@ function __zbd:count {
             __zbd:no_name_error $1
         fi
     else
-        num=$(( $_ZBD_NUM_DIR - ${_ZBD_PARENTS[(I)$1]} + 1 ))
+        num=$(( $_ZBD_NUM_DIR - ${reply[(I)$1]} + 1 ))
         __zbd:cd $num
     fi
     return
 }
 
 function __zbd:get_dirs {
-    __zbd:get_parents
-    reply=( $_ZBD_PARENTS )
-}
-
-function __zbd:get_parents {
-    typeset -g -a _ZBD_PARENTS
     local i
-    _ZBD_PARENTS=( )
-    for i in {2..$((${_ZBD_NUM_DIR}))}; do
-        _ZBD_PARENTS=( $_ZBD_PARENTS "`echo $PWD | cut -d'/' -f$i`" )
-    done
-    _ZBD_PARENTS=( "/" $_ZBD_PARENTS )
+    _ZBD_NUM_DIR=${#${(ps:/:)${PWD}}}
+    reply=()
+    if [[ ${#${(ps:/:)${PWD}}} -ge 2 ]]; then
+        for i in {2..${_ZBD_NUM_DIR}}; do
+            reply=( $reply "`echo $PWD | cut -d'/' -f$i`" )
+        done
+    fi
+    reply=( "/" $reply )
 }
 
 function __zbd:illegal_opt {
