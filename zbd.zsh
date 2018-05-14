@@ -2,8 +2,12 @@ function zbd {
     : ${_ZBD_NUM_DIR:=${#${(ps:/:)${PWD}}}}
 
     case $1 in
-        ("-h"|"--help")
+        (-h|--help)
             __zbd:help;;
+        (--)
+            __zbd:count $2;;
+        (-*)
+            __zbd:illegal_opt $1;;
         ("")
             __zbd:cd 1;;
         (*)
@@ -13,9 +17,10 @@ function zbd {
 
 function __zbd:help {
 <<EOF
-Usage: zbd [Directory_name | Number]
+usage: zbd [options] [directory name | number]
 
-Startup:
+options:
+    --              end of the options
     -h, --help      print this help
 
 EOF
@@ -62,13 +67,18 @@ function __zbd:get_parents {
     _ZBD_PARENTS=( "/" $_ZBD_PARENTS )
 }
 
+function __zbd:illegal_opt {
+    print "zbd: illegal option ${1}"
+    return 1
+}
+
 function __zbd:large_num_error {
-    print "zbd: Error: Can not go up ${1} times (not enough parent directories)"
+    print "zbd: error: can not go up ${1} times (not enough parent directories)"
     return 1
 }
 
 function __zbd:no_name_error {
-    print "zbd: Error: No parent directory named '${1}'"
+    print "zbd: error: no parent directory named '${1}'"
     return 1
 }
 
