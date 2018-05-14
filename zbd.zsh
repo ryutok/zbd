@@ -28,12 +28,13 @@ EOF
 
 function __zbd:cd {
     local dist
-    if [[ $1 -gt ${_ZBD_NUM_DIR} ]]; then
+    if [[ $1 -gt $((${_ZBD_NUM_DIR})) ]]; then
         __zbd:large_num_error $1
+    else
+        dest=`repeat $1 printf "../"`
+        cd $dest
     fi
-    dest=`repeat $1 printf "../"`
-    cd $dest
-    return 0
+    return
 }
 
 function __zbd:count {
@@ -51,6 +52,7 @@ function __zbd:count {
         num=$(( $_ZBD_NUM_DIR - ${_ZBD_PARENTS[(I)$1]} ))
         __zbd:cd $num
     fi
+    return
 }
 
 function __zbd:get_dirs {
