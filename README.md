@@ -31,7 +31,11 @@ zplug 'ryutok/zbd'
 
 ## Usage
 
-    zbd [directory name | number]
+    zbd [options] [directory name | number]
+
+    options:
+        --              end of the options
+        -h, --help      print this help
 
 ### Example:
 
@@ -39,7 +43,10 @@ zplug 'ryutok/zbd'
     /home/user/aaa/bbb/ccc/ddd
     $ zbd bbb
     $ pwd
-    /home/user/aaa/bbb
+    /home/user/aaa/-h/bbb
+    $ zbd -- -h
+    $ pwd
+    /home/user/aaa/-h
     $ zbd 2
     $ pwd
     /home/user
