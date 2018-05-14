@@ -1,6 +1,4 @@
 function zbd {
-    : ${_ZBD_NUM_DIR:=${#${(ps:/:)${PWD}}}}
-
     case $1 in
         (-h|--help)
             __zbd:help;;
@@ -28,7 +26,7 @@ EOF
 
 function __zbd:cd {
     local dest
-    if [[ $1 -gt $((${_ZBD_NUM_DIR})) ]]; then
+    if [[ $1 -gt ${#${(ps:/:)${PWD}}} ]]; then
         __zbd:large_num_error $1
     else
         dest=`repeat $1 printf "../"`
@@ -49,7 +47,7 @@ function __zbd:count {
             __zbd:no_name_error $1
         fi
     else
-        num=$(( $_ZBD_NUM_DIR - ${reply[(I)$1]} + 1 ))
+        num=$(( ${#reply} - ${reply[(I)$1]} + 1 ))
         __zbd:cd $num
     fi
     return
@@ -57,14 +55,9 @@ function __zbd:count {
 
 function __zbd:get_dirs {
     local i
-    _ZBD_NUM_DIR=${#${(ps:/:)${PWD}}}
-    reply=()
-    if [[ ${#${(ps:/:)${PWD}}} -ge 2 ]]; then
-        for i in {2..${_ZBD_NUM_DIR}}; do
-            reply=( $reply "`echo $PWD | cut -d'/' -f$i`" )
-        done
-    fi
+    reply=(${(ps:/:)${PWD}})
     reply=( "/" $reply )
+    reply=($reply[1,-2])
 }
 
 function __zbd:illegal_opt {
