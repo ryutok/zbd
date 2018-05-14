@@ -27,7 +27,7 @@ EOF
 }
 
 function __zbd:cd {
-    local dist
+    local dest
     if [[ $1 -gt $((${_ZBD_NUM_DIR})) ]]; then
         __zbd:large_num_error $1
     else
@@ -49,7 +49,7 @@ function __zbd:count {
             __zbd:no_name_error $1
         fi
     else
-        num=$(( $_ZBD_NUM_DIR - ${_ZBD_PARENTS[(I)$1]} ))
+        num=$(( $_ZBD_NUM_DIR - ${_ZBD_PARENTS[(I)$1]} + 1 ))
         __zbd:cd $num
     fi
     return
@@ -63,7 +63,8 @@ function __zbd:get_dirs {
 function __zbd:get_parents {
     typeset -g -a _ZBD_PARENTS
     local i
-    for i in {2..$((${_ZBD_NUM_DIR}+1))}; do
+    _ZBD_PARENTS=( )
+    for i in {2..$((${_ZBD_NUM_DIR}))}; do
         _ZBD_PARENTS=( $_ZBD_PARENTS "`echo $PWD | cut -d'/' -f$i`" )
     done
     _ZBD_PARENTS=( "/" $_ZBD_PARENTS )
