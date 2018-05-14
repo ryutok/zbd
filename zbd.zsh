@@ -75,4 +75,4 @@ function __zbd:no_name_error {
     return 1
 }
 
-compctl -V directories -K __zbd:get_dirs zbd
+compctl -V directories -K __zbd:get_dirs -M 'm:{[:lower:]}={[:upper:]}' zbd
