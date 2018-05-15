@@ -65,4 +65,17 @@ function __zbd:no_name_error {
     return 1
 }
 
-compctl -V directories -K __zbd:get_dirs -M 'm:{[:lower:]}={[:upper:]}' zbd
+function _zbd {
+    declare -a args
+    args=(
+        {-h,--help}'[print help]'
+        '1:parents:__zbd:add_parents'
+    )
+    function __zbd:add_parents {
+        __zbd:get_dirs
+        _wanted -V values expl 'parents' compadd $reply
+    }
+    _arguments $args
+}
+
+compdef _zbd zbd
