@@ -1,3 +1,13 @@
+# zbd - zsh plugin to go back the specific parent directory quickly
+#
+# Copyright (c) 2018 ryutok
+#
+# This software is released under the MIT License.
+# https://github.com/ryutok/zbd/blob/master/LICENSE
+#
+# Author: ryutok (https://github.com/ryutok)
+#
+
 function zbd {
     local option OPTARG OPTIND
     while getopts ':h' option; do
