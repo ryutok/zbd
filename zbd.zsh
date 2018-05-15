@@ -1,22 +1,22 @@
 function zbd {
+    local option OPTARG OPTIND
+    while getopts ':h' option; do
+        case $option in
+            h )
+                __zbd:help
+                return;;
+            * )
+                __zbd:illegal_opt $OPTARG
+                return;;
+        esac
+    done
+    shift $(expr $OPTIND - 1)
+
     case $1 in
-        -h | --help ) __zbd:help;;
-                 -- ) __zbd:count $2;;
-                 -* ) __zbd:illegal_opt $1;;
-                 "" ) __zbd:cd 1;;
-                  * ) __zbd:count $1;;
+        "" ) __zbd:cd 1;;
+         * ) __zbd:count $1;;
     esac
-}
-
-function __zbd:help {
-<<EOF
-usage: zbd [options] [directory name | number]
-
-options:
-    --              end of the options
-    -h, --help      print this help
-
-EOF
+    return
 }
 
 function __zbd:cd {
@@ -31,8 +31,8 @@ function __zbd:cd {
 
 function __zbd:count {
     local num
-    __zbd:get_dirs
-    if [[ ${reply[(I)$1]} -eq 0 ]]; then
+    __zbd:get_parents
+    if [[ ${parents[(I)$1]} -eq 0 ]]; then
         expr "$1" + 1 >/dev/null 2>&1
         if [ $? -lt 2 ]; then
             __zbd:cd $1
@@ -40,18 +40,28 @@ function __zbd:count {
             __zbd:no_name_error $1
         fi
     else
-        num=$(( ${#reply} - ${reply[(I)$1]} + 1 ))
+        num=$(( ${#parents} - ${parents[(I)$1]} + 1 ))
         __zbd:cd $num
     fi
 }
 
-function __zbd:get_dirs {
-    reply=("/" ${(ps:/:)${PWD}})
-    reply=($reply[1,-2])
+function __zbd:get_parents {
+    parents=("/" ${(ps:/:)${PWD}})
+    parents=($parents[1,-2])
+}
+
+function __zbd:help {
+<<EOF
+Usage: zbd [directory name | number]
+
+Options:
+    -h  --  print help
+
+EOF
 }
 
 function __zbd:illegal_opt {
-    print "zbd: illegal option ${1}"
+    print "zbd: illegal option -- ${1}"
     return 1
 }
 
@@ -65,4 +75,17 @@ function __zbd:no_name_error {
     return 1
 }
 
-compctl -V directories -K __zbd:get_dirs -M 'm:{[:lower:]}={[:upper:]}' zbd
+function _zbd {
+    declare -a args
+    args=(
+        '-h[print help]'
+        '1:parents:__zbd:add_parents'
+    )
+    function __zbd:add_parents {
+        __zbd:get_parents
+        _wanted -V values expl 'parents' compadd $parents
+    }
+    _arguments $args
+}
+
+compdef _zbd zbd
