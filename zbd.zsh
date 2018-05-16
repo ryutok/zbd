@@ -7,6 +7,11 @@
 #
 # Author: ryutok (https://github.com/ryutok)
 #
+# Usage:
+#     zbd [directory name | number]
+#
+# Option:
+#     -h  --  print help
 
 function zbd {
     local option OPTARG OPTIND
@@ -29,6 +34,8 @@ function zbd {
     return
 }
 
+# __zbd:cd - execute cd ../../...
+#     arg. [1]: Number of '../'
 function __zbd:cd {
     local dest
     if [[ $1 -gt ${#${(ps:/:)${PWD}}} ]]; then
@@ -39,6 +46,8 @@ function __zbd:cd {
     fi
 }
 
+# __zbd:count - count how many '../' we need
+#     arg. [1]: Parent directory name
 function __zbd:count {
     local num
     __zbd:get_parents
@@ -55,6 +64,8 @@ function __zbd:count {
     fi
 }
 
+# __zbd:get_parents - return parent directory list
+#     parents: parent directory list
 function __zbd:get_parents {
     parents=("/" ${(ps:/:)${PWD}})
     parents=($parents[1,-2])
