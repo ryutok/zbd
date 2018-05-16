@@ -40,6 +40,8 @@ function __zbd:cd {
     local dest
     if [[ $1 -gt ${#${(ps:/:)${PWD}}} ]]; then
         __zbd:large_num_error $1
+    elif [[ $1 -eq 0 ]]; then
+        __zbd:no_name_error $1
     else
         dest=`repeat $1 printf "../"`
         cd $dest
