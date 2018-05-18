@@ -52,7 +52,10 @@ function __zbd:cd {
 #     arg. [1]: Parent directory name
 function __zbd:count {
     local num
-    __zbd:get_parents
+    declare -a parents
+#   get parent directory list
+    parents=("/" ${(ps:/:)${PWD}})
+    parents=($parents[1,-2])
     if [[ ${parents[(I)$1]} -eq 0 ]]; then
         expr "$1" + 1 >/dev/null 2>&1
         if [ $? -lt 2 ]; then
@@ -64,13 +67,6 @@ function __zbd:count {
         num=$(( ${#parents} - ${parents[(I)$1]} + 1 ))
         __zbd:cd $num
     fi
-}
-
-# __zbd:get_parents - return parent directory list
-#     parents: parent directory list
-function __zbd:get_parents {
-    parents=("/" ${(ps:/:)${PWD}})
-    parents=($parents[1,-2])
 }
 
 function __zbd:help {
@@ -97,18 +93,3 @@ function __zbd:no_name_error {
     print "zbd: error: no parent directory named '${1}'"
     return 1
 }
-
-function _zbd {
-    declare -a args
-    args=(
-        '-h[print help]'
-        '1:parents:__zbd:add_parents'
-    )
-    function __zbd:add_parents {
-        __zbd:get_parents
-        _wanted -V values expl 'parents' compadd $parents
-    }
-    _arguments $args
-}
-
-compdef _zbd zbd
