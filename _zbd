@@ -1,0 +1,24 @@
+#compdef zbd
+#
+# Copyright (c) 2018 ryutok
+#
+# This software is released under the MIT License.
+# https://github.com/ryutok/zbd/blob/master/LICENSE
+#
+# Author: ryutok (https://github.com/ryutok)
+
+declare -a args
+args=(
+    '-h[print help]'
+    '1:parents:__zbd:add_parents'
+)
+
+function __zbd:add_parents {
+    declare -a parents
+    parents=("/" ${(ps:/:)${PWD}})
+    parents=($parents[1,-2])
+    _wanted -V values expl 'parents' compadd $parents
+}
+
+_arguments $args
+return

@@ -1,1 +1,1 @@
-zbd.zsh
+autoload -Uz zbd
