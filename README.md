@@ -17,12 +17,13 @@ Command `zbd` without argument corresponds `zbd 1` and `cd ../`.
 
 ### Support new completion system (`zstyle`)
 You can change TAB completion performance using `zstyle` command.
-For example, when you want to ignore case, add `zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'` in your `.zshrc`.
-To make available the completion system, you have to put the following lines in your `.zshrc` before loading `zbd`.
+For example, when you want to ignore case, add the following lines in your `.zshrc`.
 
 ```
 autoload -Uz compinit
 compinit
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 ```
 
 
@@ -37,10 +38,11 @@ compinit
 
 ## Installation
 ### Manually
-Put `zbd.zsh` file somewhere you want to install, and add the following line in your `.zshrc`.
+Put `zbd` and `_zbd` files somewhere you want to install, and add the following lines in your `.zshrc`.
 
 ```
-source  <INSTALL_DIR>/zbd.zsh
+export fpath=( <INSTALL_DIR> $fpath )
+autoload -Uz zbd
 ```
 
 ### Using zplug
