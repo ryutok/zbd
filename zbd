@@ -42,7 +42,9 @@ function __zbd:no_name_error {
 # __zbd:cd - execute cd ../../...
 #     arg. [1]: Number of '../'
 function __zbd:cd {
-    if [[ $1 -gt ${#${(ps:/:)${PWD}}} ]]; then
+    if [[ $1 -le 0 ]]; then
+        __zbd:no_name_error $1
+    elif [[ $1 -gt ${#${(ps:/:)${PWD}}} ]]; then
         __zbd:large_num_error $1
     else
         local dest=`repeat $1 printf "../"`
@@ -63,7 +65,7 @@ function __zbd:count {
 
     if [[ ${parents[(I)$1]} -eq 0 ]]; then
         expr "$1" + 0 >/dev/null 2>&1
-        if [ $? -eq 0 ]; then
+        if [ $? -lt 2 ]; then
             __zbd:cd $1
         else
             __zbd:no_name_error $1
