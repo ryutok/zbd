@@ -1,0 +1,12 @@
+os: linux
+sudo: enabled
+
+install:
+  - "sudo apt-get install zsh"
+  - "git clone --depth=1 https://github.com/kward/shunit2.git ./shunit2"
+
+script:
+  - "zsh -o shwordsplit -- zbd.t"
+
+after_script:
+  - "rm -rf ./shunit2"
