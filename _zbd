@@ -1,4 +1,7 @@
 #compdef zbd
+# vim:set filetype=zsh:
+
+# Completion function for zbd
 #
 # Copyright (c) 2018 ryutok
 #

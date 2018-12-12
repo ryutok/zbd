@@ -1,3 +1,11 @@
+# vim:set filetype=sh:
+
+# Test functions by shUnit2
+#
+# Copyright (c) 2018 ryutok
+#
+# Author: ryutok (https://github.com/ryutok)
+
 SHUNIT_PARENT=$0
 
 setUp() {

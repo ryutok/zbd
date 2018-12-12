@@ -1,3 +1,5 @@
+# vim:set filetype=zsh:
+
 # zbd - zsh plugin to go back the specific parent directory quickly
 #
 # Copyright (c) 2018 ryutok
@@ -12,6 +14,7 @@
 #
 # Option:
 #     -h  --  print help
+
 
 function __zbd:help {
 <<EOF
